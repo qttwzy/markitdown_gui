@@ -61,6 +61,7 @@ MarkItDown GUI 是一款基于 Python 的桌面应用程序，提供直观的图
    ```bash
    pip install markitdown tkinterdnd2 PyMuPDF
    ```
+\*PyMuPDF not necessary
 
 3. **运行应用**
    ```bash
@@ -237,6 +238,7 @@ MarkItDown GUI is a Python-based desktop application that provides an intuitive 
    ```bash
    pip install markitdown tkinterdnd2 PyMuPDF
    ```
+\*PyMuPDF not necessary
 
 3. **Run the application**
    ```bash

@@ -1,0 +1,91 @@
+# -*- mode: python ; coding: utf-8 -*-
+import sys
+import os
+
+block_cipher = None
+
+EXCLUDES = [
+    'torch', 'torchvision', 'torchaudio', 'timm', 'xformers',
+    'sklearn', 'scikit-learn', 'skimage',
+    'tensorflow', 'keras', 'onnx', 'onnxruntime',
+    'cv2', 'opencv-python', 'librosa',
+    'bitsandbytes', 'diffusers', 'transformers', 'accelerate',
+    'datasets', 'pyarrow', 'tokenizers', 'safetensors',
+    'numba', 'llvmlite',
+    'matplotlib', 'scipy', 'pandas',
+    'sqlalchemy', 'psycopg2', 'pymysql', 'MySQLdb',
+    'yt_dlp', 'websockets', 'curl_cffi',
+    'cryptography', 'nacl',
+    'boto3', 'botocore',
+    'google', 'google.cloud', 'google.auth',
+    'azure', 'kubernetes',
+    'selenium', 'playwright',
+    'pytest', 'nose', 'mock',
+    'setuptools', 'pip', 'wheel',
+    'tkinter.test',
+    'unittest', 'pydoc', 'doctest',
+    'xmlrpc', 'xml.etree',
+    'multiprocessing', 'concurrent',
+    'email', 'html', 'http', 'urllib3',
+    'asyncio', 'logging.handlers',
+    'distutils', 'lib2to3',
+    'pygments', 'IPython', 'jupyter',
+    'notebook', 'ipykernel',
+    'flask', 'django', 'fastapi', 'uvicorn', 'starlette',
+    'aiohttp', 'requests', 'h11', 'h2',
+    'pydantic', 'jsonschema',
+    'opentelemetry', 'prometheus_client',
+    'tornado', 'zmq',
+    'win32com', 'pythoncom', 'pywintypes',
+    'numpy', 'pandas',
+]
+
+a = Analysis(
+    ['main.py'],
+    pathex=[],
+    binaries=[],
+    datas=[],
+    hiddenimports=[
+        'markitdown',
+        'markitdown._markitdown',
+        'tkinterdnd2',
+        'fitz',
+        'pdfminer',
+        'reportlab',
+        'reportlab.lib.pagesizes',
+        'reportlab.pdfgen',
+        'reportlab.pdfgen.canvas',
+    ],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=EXCLUDES,
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False,
+)
+
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
+exe = EXE(
+    pyz,
+    a.scripts,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    [],
+    name='MarkItDown',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+)

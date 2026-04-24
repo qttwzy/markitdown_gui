@@ -1,0 +1,365 @@
+<div align="center">
+
+# MarkItDown GUI
+
+**一款强大的桌面文件转换工具，将多种文件格式转换为 Markdown**
+
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
+
+[English](#english) | [中文](#中文)
+
+---
+
+</div>
+
+<a id="中文"></a>
+
+## 📖 项目概述
+
+MarkItDown GUI 是一款基于 Python 的桌面应用程序，提供直观的图形界面，将多种文件格式（PDF、Word、Excel、PPT、HTML、图片、音频等）快速转换为 Markdown 格式。应用集成了智能转换时间预测、批量处理、拖拽操作等功能，旨在为用户提供高效、便捷的文件转换体验。
+
+## ✨ 功能特性
+
+### 核心功能
+- **多格式支持** — 支持 PDF、Word (.docx)、Excel (.xlsx/.xls)、PowerPoint (.pptx)、HTML、CSV、JSON、XML、TXT、Markdown、图片（PNG/JPG/GIF/BMP/WebP）、音频（MP3/WAV/OGG/FLAC/AAC）、ZIP 压缩包等格式
+- **批量转换** — 一次性添加多个文件进行批量处理，显著提升工作效率
+- **拖拽操作** — 支持文件拖拽上传，也可通过路径输入或文件浏览器添加文件
+- **智能时间预测** — 基于文件类型、大小和历史数据，精准预测转换所需时间
+
+### 用户体验
+- **实时计时器** — 转换过程中显示实时已耗时
+- **可排序列表** — 点击列标题按文件名、大小、预估耗时排序
+- **转换历史** — 完整记录每次转换的时间、状态、实际耗时与预测对比
+- **双语支持** — 支持中文/英文界面切换，语言偏好自动保存
+- **确认弹窗** — 关键操作前弹出确认对话框，防止误操作
+
+### 技术亮点
+- **PDF 增强转换** — 优先使用 markitdown 引擎，结果为空时自动回退至 PyMuPDF 引擎
+- **自适应预测模型** — 随着使用次数增加，预测精度持续提升
+- **大文件优化** — 超过 10MB 的文件自动启用大文件处理模式
+- **路径标准化** — 自动处理路径中的特殊字符和分隔符
+- **完善的错误处理** — 输入验证、权限检查、异常捕获，确保程序稳定运行
+- **日志系统** — 完整的日志记录，便于问题排查
+
+## 📦 安装步骤
+
+### 环境要求
+- Python 3.11 或更高版本
+- Windows 操作系统
+
+### 从源码安装
+
+1. **克隆仓库**
+   ```bash
+   git clone https://github.com/your-username/markitdown_gui.git
+   cd markitdown_gui
+   ```
+
+2. **安装依赖**
+   ```bash
+   pip install markitdown tkinterdnd2 PyMuPDF
+   ```
+
+3. **运行应用**
+   ```bash
+   python main.py
+   ```
+
+### 使用安装包（推荐）
+
+下载最新的 `MarkItDown_Setup_X.X.X.exe` 安装包，双击运行即可完成安装。
+
+## 🚀 使用指南
+
+### 基本操作流程
+
+1. **添加文件** — 通过以下任一方式添加待转换文件：
+   - 将文件拖拽至顶部拖放区域
+   - 在路径输入框中输入文件路径，按回车或点击"添加"
+   - 点击"浏览文件"按钮选择文件
+
+2. **查看预测** — 文件添加后，智能预测面板会显示：
+   - 预计总转换耗时
+   - 时间区间范围
+   - 预测置信度（高/中/低）
+   - 文件类型构成
+
+3. **开始转换** — 点击"开始"按钮，确认转换信息后开始处理
+
+4. **查看结果** — 转换完成后：
+   - Markdown 文件自动保存在源文件同目录下
+   - 详情区域显示每个文件的转换结果
+   - 历史记录面板记录完整的转换信息
+
+### 列表排序
+
+点击文件列表的列标题进行排序：
+- **文件名** — 按文件名字母顺序排序
+- **大小** — 按文件大小排序
+- **预估耗时** — 按预测转换时间排序
+- 再次点击切换升序/降序，第三次点击恢复原始顺序
+
+### 语言切换
+
+在应用标题栏右侧，通过单选按钮切换中文/英文界面，语言偏好会自动保存。
+
+## ⚙️ 配置说明
+
+### 数据存储位置
+
+应用在用户主目录下存储配置和数据：
+
+| 文件 | 路径 | 说明 |
+|------|------|------|
+| 转换历史 | `~/.markitdown_gui_history.json` | 记录所有转换操作的详细信息 |
+| 预测模型 | `~/.markitdown_gui_predictor.json` | 存储自适应预测模型的参数和样本数据 |
+| 语言偏好 | `~/.markitdown_gui_lang.json` | 保存用户选择的语言设置 |
+| 日志文件 | `~/.markitdown_gui/app_YYYYMMDD.log` | 按日期分割的应用日志 |
+| 调试日志 | `./debug.log` | 当前工作目录下的调试日志 |
+
+### 支持的文件格式
+
+| 类别 | 扩展名 |
+|------|--------|
+| PDF | `.pdf` |
+| Word | `.docx` |
+| Excel | `.xlsx`, `.xls` |
+| PowerPoint | `.pptx` |
+| HTML | `.html`, `.htm` |
+| 文本 | `.txt`, `.md`, `.rst`, `.log`, `.csv`, `.json`, `.xml` |
+| 图片 | `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.tiff`, `.tif`, `.webp` |
+| 音频 | `.mp3`, `.wav`, `.ogg`, `.flac`, `.aac` |
+| 压缩包 | `.zip` |
+
+### 预测模型参数
+
+预测模型使用以下参数进行时间估算：
+
+- **基础转换速率** — 每种文件类型有不同的基准处理速率
+- **大小因子** — 大文件会有额外的处理开销系数
+- **启动时间** — 每种类型的初始化开销
+- **置信度计算** — 基于历史样本数量和方差确定预测置信度
+- **自适应校准** — 随着使用积累，模型会自动调整参数提升精度
+
+## 🏗️ 项目结构
+
+```
+markitdown_gui/
+├── main.py              # 应用入口
+├── gui.py               # 图形界面（Tkinter）
+├── converter.py         # 文件转换引擎
+├── predictor.py         # 智能时间预测模块
+├── i18n.py              # 国际化支持模块
+├── logger_config.py     # 日志配置
+├── MarkItDown.spec      # PyInstaller 打包配置
+├── setup.iss            # Inno Setup 安装脚本
+└── README.md            # 项目文档
+```
+
+### 模块说明
+
+- **main.py** — 应用程序入口，初始化日志系统和主窗口
+- **gui.py** — 基于 Tkinter 和 tkinterdnd2 构建的图形界面，包含拖放、排序、计时器等功能
+- **converter.py** — 核心转换引擎，封装 markitdown 库，提供文件验证、路径标准化、PDF 增强转换、历史记录管理
+- **predictor.py** — 智能预测模块，基于文件类型和大小估算转换时间，支持自适应校准
+- **i18n.py** — 国际化模块，提供中英文翻译字典和语言切换功能
+- **logger_config.py** — 日志系统配置，支持文件和控制台双输出
+
+## 🤝 贡献流程
+
+欢迎对本项目做出贡献！请遵循以下步骤：
+
+1. **Fork 本仓库** — 点击 GitHub 页面右上角的 Fork 按钮
+2. **创建功能分支** — `git checkout -b feature/your-feature-name`
+3. **提交更改** — `git commit -m "Add: 描述你的更改"`
+4. **推送分支** — `git push origin feature/your-feature-name`
+5. **创建 Pull Request** — 在 GitHub 上发起合并请求
+
+### 贡献规范
+
+- 遵循现有代码风格和命名约定
+- 新功能需添加对应的国际化翻译（中英文）
+- 确保代码无语法错误和运行时异常
+- 提交信息使用清晰、描述性的语言
+
+## 📄 许可证
+
+本项目基于 [MIT License](LICENSE) 开源。
+
+---
+
+<a id="english"></a>
+
+## 📖 Overview
+
+MarkItDown GUI is a Python-based desktop application that provides an intuitive graphical interface for converting various file formats (PDF, Word, Excel, PPT, HTML, images, audio, etc.) to Markdown format. The application integrates smart conversion time prediction, batch processing, drag-and-drop operations, and more, aiming to deliver an efficient and convenient file conversion experience.
+
+## ✨ Features
+
+### Core Features
+- **Multi-Format Support** — Supports PDF, Word (.docx), Excel (.xlsx/.xls), PowerPoint (.pptx), HTML, CSV, JSON, XML, TXT, Markdown, images (PNG/JPG/GIF/BMP/WebP), audio (MP3/WAV/OGG/FLAC/AAC), ZIP archives, and more
+- **Batch Conversion** — Add multiple files at once for batch processing, significantly improving efficiency
+- **Drag & Drop** — Drag files directly into the drop zone, or add files via path input or file browser
+- **Smart Time Prediction** — Accurately estimates conversion time based on file type, size, and historical data
+
+### User Experience
+- **Real-Time Timer** — Displays elapsed time during conversion
+- **Sortable List** — Click column headers to sort by filename, size, or estimated time
+- **Conversion History** — Complete records of each conversion including time, status, actual vs. predicted duration
+- **Bilingual Support** — Switch between Chinese and English interface; language preference is automatically saved
+- **Confirmation Dialogs** — Confirmation prompts before critical operations prevent accidental actions
+
+### Technical Highlights
+- **Enhanced PDF Conversion** — Uses markitdown engine first, automatically falls back to PyMuPDF when results are empty
+- **Adaptive Prediction Model** — Prediction accuracy improves continuously as usage accumulates
+- **Large File Optimization** — Files exceeding 10MB automatically trigger large file processing mode
+- **Path Normalization** — Automatically handles special characters and path separators
+- **Robust Error Handling** — Input validation, permission checks, and exception catching ensure stable operation
+- **Logging System** — Comprehensive log records for troubleshooting
+
+## 📦 Installation
+
+### Requirements
+- Python 3.11 or higher
+- Windows operating system
+
+### Install from Source
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/markitdown_gui.git
+   cd markitdown_gui
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pip install markitdown tkinterdnd2 PyMuPDF
+   ```
+
+3. **Run the application**
+   ```bash
+   python main.py
+   ```
+
+### Using the Installer (Recommended)
+
+Download the latest `MarkItDown_Setup_X.X.X.exe` installer and double-click to install.
+
+## 🚀 Usage Guide
+
+### Basic Workflow
+
+1. **Add Files** — Add files to convert using any of these methods:
+   - Drag and drop files into the drop zone at the top
+   - Type a file path in the input box and press Enter or click "Add"
+   - Click the "Browse" button to select files
+
+2. **View Predictions** — After adding files, the prediction panel displays:
+   - Estimated total conversion time
+   - Time range (lower and upper bounds)
+   - Prediction confidence (High/Medium/Low)
+   - File type composition
+
+3. **Start Conversion** — Click the "START" button and confirm the conversion details
+
+4. **View Results** — After conversion completes:
+   - Markdown files are automatically saved in the same directory as the source files
+   - The detail area shows conversion results for each file
+   - The history panel records complete conversion information
+
+### List Sorting
+
+Click column headers in the file list to sort:
+- **Filename** — Sort alphabetically by filename
+- **Size** — Sort by file size
+- **Est. Time** — Sort by predicted conversion time
+- Click again to toggle ascending/descending; a third click restores the original order
+
+### Language Switching
+
+Use the radio buttons on the right side of the title bar to switch between Chinese and English. Your language preference is saved automatically.
+
+## ⚙️ Configuration
+
+### Data Storage Locations
+
+The application stores configuration and data in the user's home directory:
+
+| File | Path | Description |
+|------|------|-------------|
+| Conversion History | `~/.markitdown_gui_history.json` | Detailed records of all conversion operations |
+| Prediction Model | `~/.markitdown_gui_predictor.json` | Adaptive prediction model parameters and sample data |
+| Language Preference | `~/.markitdown_gui_lang.json` | Saved language setting |
+| Log Files | `~/.markitdown_gui/app_YYYYMMDD.log` | Daily application logs |
+| Debug Log | `./debug.log` | Debug log in the current working directory |
+
+### Supported File Formats
+
+| Category | Extensions |
+|----------|-----------|
+| PDF | `.pdf` |
+| Word | `.docx` |
+| Excel | `.xlsx`, `.xls` |
+| PowerPoint | `.pptx` |
+| HTML | `.html`, `.htm` |
+| Text | `.txt`, `.md`, `.rst`, `.log`, `.csv`, `.json`, `.xml` |
+| Images | `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.tiff`, `.tif`, `.webp` |
+| Audio | `.mp3`, `.wav`, `.ogg`, `.flac`, `.aac` |
+| Archives | `.zip` |
+
+### Prediction Model Parameters
+
+The prediction model uses the following parameters for time estimation:
+
+- **Base Conversion Rate** — Each file type has a different baseline processing rate
+- **Size Factor** — Larger files incur additional processing overhead coefficients
+- **Startup Time** — Initialization overhead for each file type
+- **Confidence Calculation** — Prediction confidence is determined based on historical sample count and variance
+- **Adaptive Calibration** — The model automatically adjusts parameters to improve accuracy as usage accumulates
+
+## 🏗️ Project Structure
+
+```
+markitdown_gui/
+├── main.py              # Application entry point
+├── gui.py               # Graphical interface (Tkinter)
+├── converter.py         # File conversion engine
+├── predictor.py         # Smart time prediction module
+├── i18n.py              # Internationalization module
+├── logger_config.py     # Logging configuration
+├── MarkItDown.spec      # PyInstaller packaging config
+├── setup.iss            # Inno Setup installer script
+└── README.md            # Project documentation
+```
+
+### Module Descriptions
+
+- **main.py** — Application entry point; initializes logging system and main window
+- **gui.py** — GUI built with Tkinter and tkinterdnd2; includes drag-and-drop, sorting, timer, and other features
+- **converter.py** — Core conversion engine wrapping the markitdown library; provides file validation, path normalization, enhanced PDF conversion, and history management
+- **predictor.py** — Smart prediction module that estimates conversion time based on file type and size, with adaptive calibration support
+- **i18n.py** — Internationalization module providing Chinese and English translation dictionaries and language switching
+- **logger_config.py** — Logging system configuration with dual file and console output
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. **Fork this repository** — Click the Fork button in the top-right corner of the GitHub page
+2. **Create a feature branch** — `git checkout -b feature/your-feature-name`
+3. **Commit your changes** — `git commit -m "Add: describe your changes"`
+4. **Push the branch** — `git push origin feature/your-feature-name`
+5. **Create a Pull Request** — Open a merge request on GitHub
+
+### Contribution Guidelines
+
+- Follow existing code style and naming conventions
+- Add corresponding internationalization translations (Chinese and English) for new features
+- Ensure code has no syntax errors or runtime exceptions
+- Use clear, descriptive language in commit messages
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

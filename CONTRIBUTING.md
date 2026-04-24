@@ -94,7 +94,7 @@ Before submitting a Pull Request:
 
 1. Clone your fork:
    ```bash
-   git clone https://github.com/your-username/markitdown_gui.git
+   git clone https://github.com/qttwzy/markitdown_gui.git
    cd markitdown_gui
    ```
 

@@ -53,7 +53,7 @@ MarkItDown GUI 是一款基于 Python 的桌面应用程序，提供直观的图
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/your-username/markitdown_gui.git
+   git clone https://github.com/qttwzy/markitdown_gui.git
    cd markitdown_gui
    ```
 
@@ -229,7 +229,7 @@ MarkItDown GUI is a Python-based desktop application that provides an intuitive 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/markitdown_gui.git
+   git clone https://github.com/qttwzy/markitdown_gui.git
    cd markitdown_gui
    ```
 

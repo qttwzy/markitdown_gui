@@ -12,12 +12,6 @@ from markitdown import MarkItDown
 
 from i18n import t
 
-try:
-    import fitz
-    _PYMUPDF_AVAILABLE = True
-except ImportError:
-    _PYMUPDF_AVAILABLE = False
-
 LARGE_FILE_THRESHOLD = 10 * 1024 * 1024
 
 SUPPORTED_EXTENSIONS = {
@@ -143,15 +137,6 @@ class ConversionEngine:
             markdown_content = result.markdown
 
             if not markdown_content or not markdown_content.strip():
-                ext = pathlib.Path(norm_path).suffix.lower()
-                if ext == ".pdf":
-                    logger.info(t("log_pdf_fallback", path=norm_path))
-                    pymupdf_content = self._convert_pdf_with_pymupdf(norm_path)
-                    if pymupdf_content and pymupdf_content.strip():
-                        markdown_content = pymupdf_content
-                        logger.info(t("log_pdf_fallback_success", path=norm_path))
-
-            if not markdown_content or not markdown_content.strip():
                 error_msg = t("err_empty_result", path=norm_path)
                 logger.warning(error_msg)
                 record = ConversionRecord(
@@ -196,37 +181,11 @@ class ConversionEngine:
             logger.error(error_msg)
             return self._record_failure(norm_path, file_size, start_time, error_msg, start_mono)
         except Exception as e:
-            error_msg = t("err_conversion_failed", type=type(e).__name__, error=e)
-            logger.error(error_msg, exc_info=True)
+            import traceback
+            tb = traceback.format_exc()
+            error_msg = f"{type(e).__name__}: {e}"
+            logger.error(f"{t('err_conversion_failed', type=type(e).__name__, error=e)}\n{tb}")
             return self._record_failure(norm_path, file_size, start_time, error_msg, start_mono)
-
-    def _convert_pdf_with_pymupdf(self, file_path: str) -> Optional[str]:
-        if not _PYMUPDF_AVAILABLE:
-            logger.warning(t("log_pymupdf_not_installed"))
-            return None
-        try:
-            doc = fitz.open(file_path)
-            pages = []
-            for page_num in range(len(doc)):
-                page = doc[page_num]
-                text = page.get_text("text")
-                if text and text.strip():
-                    pages.append(text)
-                images = page.get_images(full=True)
-                for img_index, img in enumerate(images):
-                    xref = img[0]
-                    base_image = doc.extract_image(xref)
-                    if base_image and base_image.get("ext"):
-                        pages.append(f"[图片 {img_index + 1}]")
-            doc.close()
-            if pages:
-                content = "\n\n".join(pages)
-                logger.info(t("log_pdf_fallback_success", path=file_path))
-                return content
-            return None
-        except Exception as e:
-            logger.warning(t("log_pymupdf_fallback_failed", error=e))
-            return None
 
     def _convert_large_file(self, file_path: str):
         logger.info(t("log_large_file_mode", path=file_path))

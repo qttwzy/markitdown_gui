@@ -11,6 +11,7 @@ from tkinterdnd2 import DND_FILES, TkinterDnD
 from converter import ConversionEngine, ConversionResult, normalize_path, validate_file
 from predictor import ConversionPredictor, PredictionResult
 from i18n import t, get_lang, set_lang, LANG_ZH, LANG_EN
+from console_panel import ConsolePanel
 
 logger = logging.getLogger("markitdown_gui")
 
@@ -143,6 +144,7 @@ class MarkItDownApp:
         outer = ttk.Frame(self.root)
         outer.pack(fill=tk.BOTH, expand=True)
 
+        self._build_console_panel(outer)
         self._build_fixed_top(outer)
         self._build_scrollable_area(outer)
 
@@ -536,6 +538,22 @@ class MarkItDownApp:
         self.refresh_history_btn.pack(side=tk.LEFT)
         self.clear_history_btn = ttk.Button(btn_frame, text="", command=self._clear_history)
         self.clear_history_btn.pack(side=tk.LEFT, padx=(8, 0))
+
+    def _build_console_panel(self, parent):
+        self.console_panel = ConsolePanel(parent, self.root)
+        self.console_panel.pack(fill=tk.X, side=tk.BOTTOM, padx=0, pady=0)
+        self._setup_console_logging()
+
+    def _setup_console_logging(self):
+        import logging
+        console_handler = logging.StreamHandler(self.console_panel)
+        console_handler.setLevel(logging.DEBUG)
+        console_fmt = logging.Formatter(
+            "[%(levelname)s] %(name)s - %(message)s"
+        )
+        console_handler.setFormatter(console_fmt)
+        console_handler.addFilter(lambda record: not getattr(record, '_no_console', False))
+        logger.addHandler(console_handler)
 
     def _setup_dnd(self):
         self.drop_frame.drop_target_register(DND_FILES)

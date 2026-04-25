@@ -15,12 +15,17 @@ def main():
     root = TkinterDnD.Tk()
     app = MarkItDownApp(root)
 
-    root.protocol("WM_DELETE_WINDOW", _on_close(root))
+    root.protocol("WM_DELETE_WINDOW", _on_close(root, app))
     root.mainloop()
 
 
-def _on_close(root):
+def _on_close(root, app):
     def handler():
+        try:
+            if hasattr(app, 'console_panel'):
+                app.console_panel.restore_streams()
+        except Exception:
+            pass
         try:
             root.destroy()
         except Exception:

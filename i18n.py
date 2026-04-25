@@ -131,6 +131,10 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "log_pdf_predict": "PDF预测: {pages}页 × {time_per_page}s/页 + I/O {io}s = {predicted}s",
         "log_logging_initialized": "日志系统初始化完成",
         "log_log_file": "日志文件: {path}",
+        "console_title": "控制台",
+        "console_auto_scroll": "自动滚动",
+        "console_clear": "清空",
+        "console_copy": "复制",
     },
     LANG_EN: {
         "app_title": "MarkItDown - File Converter",
@@ -254,6 +258,10 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "log_pdf_predict": "PDF prediction: {pages} pages × {time_per_page}s/page + I/O {io}s = {predicted}s",
         "log_logging_initialized": "Logging system initialized",
         "log_log_file": "Log file: {path}",
+        "console_title": "Console",
+        "console_auto_scroll": "Auto Scroll",
+        "console_clear": "Clear",
+        "console_copy": "Copy",
     },
 }
 

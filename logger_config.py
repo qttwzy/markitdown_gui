@@ -27,15 +27,7 @@ def setup_logging() -> logging.Logger:
     )
     file_handler.setFormatter(file_fmt)
 
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.WARNING)
-    console_fmt = logging.Formatter(
-        "[%(levelname)s] %(message)s"
-    )
-    console_handler.setFormatter(console_fmt)
-
     logger.addHandler(file_handler)
-    logger.addHandler(console_handler)
 
     logger.info(t("log_logging_initialized"))
     logger.info(t("log_log_file", path=log_file))

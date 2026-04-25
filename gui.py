@@ -6,7 +6,14 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog, font as tkfont
 from typing import Optional, List, Dict
 
-from tkinterdnd2 import DND_FILES, TkinterDnD
+_TKDND_AVAILABLE = False
+DND_FILES = None
+try:
+    from tkinterdnd2 import DND_FILES as _DND_FILES, TkinterDnD
+    DND_FILES = _DND_FILES
+    _TKDND_AVAILABLE = True
+except (ImportError, RuntimeError):
+    pass
 
 from converter import ConversionEngine, ConversionResult, normalize_path, validate_file
 from predictor import ConversionPredictor, PredictionResult
@@ -55,7 +62,7 @@ BTN_BROWSE_ACTIVE = "#1F2937"
 
 
 class MarkItDownApp:
-    def __init__(self, root: TkinterDnD.Tk):
+    def __init__(self, root: tk.Tk):
         self.root = root
         self.root.geometry("880x780")
         self.root.minsize(800, 700)
@@ -556,6 +563,9 @@ class MarkItDownApp:
         logger.addHandler(console_handler)
 
     def _setup_dnd(self):
+        if not _TKDND_AVAILABLE:
+            logger.info("拖拽功能不可用（tkinterdnd2 未加载），请使用浏览按钮或路径输入添加文件")
+            return
         self.drop_frame.drop_target_register(DND_FILES)
         self.drop_frame.dnd_bind("<<Drop>>", self._on_drop)
         self.drop_frame.dnd_bind("<<DragEnter>>", self._on_drag_enter)

@@ -52,8 +52,47 @@ MarkItDown GUI 是一款基于 Python 的桌面应用程序，提供直观的图
 ### 环境要求
 - Python 3.11 或更高版本
 - Windows 操作系统
+- [uv](https://docs.astral.sh/uv/) 包管理器（推荐）或 pip
 
-### 从源码安装
+### 安装 uv
+
+uv 是一个极速的 Python 包管理器，用于替代 pip 实现可复现的依赖管理。
+
+**Windows（PowerShell）：**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**macOS / Linux：**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+安装完成后验证：
+```bash
+uv --version
+```
+
+### 从源码安装（使用 uv，推荐）
+
+1. **克隆仓库**
+   ```bash
+   git clone https://github.com/qttwzy/markitdown_gui.git
+   cd markitdown_gui
+   ```
+
+2. **使用 uv 同步依赖**
+   ```bash
+   uv sync
+   ```
+   此命令会自动创建虚拟环境（`.venv`）并根据 `uv.lock` 锁定文件安装所有依赖的精确版本。
+
+3. **运行应用**
+   ```bash
+   uv run python main.py
+   ```
+
+### 从源码安装（使用 pip）
 
 1. **克隆仓库**
    ```bash
@@ -63,7 +102,7 @@ MarkItDown GUI 是一款基于 Python 的桌面应用程序，提供直观的图
 
 2. **安装依赖**
    ```bash
-   pip install markitdown[pdf] tkinterdnd2
+   pip install markitdown[pdf] tkinterdnd2 pymupdf
    ```
 
 3. **运行应用**
@@ -74,6 +113,33 @@ MarkItDown GUI 是一款基于 Python 的桌面应用程序，提供直观的图
 ### 使用安装包（推荐）
 
 下载最新的 `MarkItDown_Setup_X.X.X.exe` 安装包，双击运行即可完成安装。安装后无需额外配置，所有依赖已内置。
+
+### uv 常用命令
+
+| 命令 | 说明 |
+|------|------|
+| `uv sync` | 根据 `uv.lock` 同步安装所有依赖 |
+| `uv lock` | 重新解析依赖并更新 `uv.lock` |
+| `uv add <package>` | 添加新依赖并更新 `uv.lock` |
+| `uv remove <package>` | 移除依赖并更新 `uv.lock` |
+| `uv run python main.py` | 在 uv 管理的虚拟环境中运行脚本 |
+| `uv run --group dev pyinstaller ...` | 运行开发组依赖中的工具 |
+
+### 平台说明
+
+- **Windows** — 完全支持所有功能，包括文件拖拽
+- **Linux** — 核心功能正常可用，但拖拽功能需要额外安装系统级 `tkdnd` 库：
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install tkdnd
+
+  # Fedora/RHEL
+  sudo dnf install tkdnd
+
+  # Arch Linux
+  sudo pacman -S tkdnd
+  ```
+  若未安装 `tkdnd`，应用会自动降级运行，拖拽功能不可用，但可通过**浏览按钮**和**路径输入**正常添加文件
 
 ## 🚀 使用指南
 
@@ -166,6 +232,8 @@ markitdown_gui/
 ├── console_panel.py     # 内嵌控制台面板
 ├── i18n.py              # 国际化支持模块
 ├── logger_config.py     # 日志配置
+├── pyproject.toml       # 项目依赖配置（uv/pip）
+├── uv.lock              # 依赖版本锁定文件
 ├── MarkItDown.spec      # PyInstaller 打包配置
 ├── setup.iss            # Inno Setup 安装脚本
 └── README.md            # 项目文档
@@ -240,8 +308,47 @@ MarkItDown GUI is a Python-based desktop application that provides an intuitive 
 ### Requirements
 - Python 3.11 or higher
 - Windows operating system
+- [uv](https://docs.astral.sh/uv/) package manager (recommended) or pip
 
-### Install from Source
+### Installing uv
+
+uv is an extremely fast Python package manager that replaces pip for reproducible dependency management.
+
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**macOS / Linux:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Verify the installation:
+```bash
+uv --version
+```
+
+### Install from Source (using uv, recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/qttwzy/markitdown_gui.git
+   cd markitdown_gui
+   ```
+
+2. **Sync dependencies with uv**
+   ```bash
+   uv sync
+   ```
+   This command automatically creates a virtual environment (`.venv`) and installs all dependencies at their exact pinned versions based on the `uv.lock` file.
+
+3. **Run the application**
+   ```bash
+   uv run python main.py
+   ```
+
+### Install from Source (using pip)
 
 1. **Clone the repository**
    ```bash
@@ -251,7 +358,7 @@ MarkItDown GUI is a Python-based desktop application that provides an intuitive 
 
 2. **Install dependencies**
    ```bash
-   pip install markitdown[pdf] tkinterdnd2
+   pip install markitdown[pdf] tkinterdnd2 pymupdf
    ```
 
 3. **Run the application**
@@ -262,6 +369,33 @@ MarkItDown GUI is a Python-based desktop application that provides an intuitive 
 ### Using the Installer (Recommended)
 
 Download the latest `MarkItDown_Setup_X.X.X.exe` installer and double-click to install. No additional configuration needed — all dependencies are bundled.
+
+### Common uv Commands
+
+| Command | Description |
+|---------|-------------|
+| `uv sync` | Sync all dependencies based on `uv.lock` |
+| `uv lock` | Re-resolve dependencies and update `uv.lock` |
+| `uv add <package>` | Add a new dependency and update `uv.lock` |
+| `uv remove <package>` | Remove a dependency and update `uv.lock` |
+| `uv run python main.py` | Run a script in the uv-managed virtual environment |
+| `uv run --group dev pyinstaller ...` | Run tools from the dev dependency group |
+
+### Platform Notes
+
+- **Windows** — Full feature support, including drag-and-drop
+- **Linux** — Core functionality works, but drag-and-drop requires the system-level `tkdnd` library:
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install tkdnd
+
+  # Fedora/RHEL
+  sudo dnf install tkdnd
+
+  # Arch Linux
+  sudo pacman -S tkdnd
+  ```
+  If `tkdnd` is not installed, the app automatically degrades gracefully — drag-and-drop will be unavailable, but you can still add files via the **Browse button** or **path input**
 
 ## 🚀 Usage Guide
 
@@ -354,6 +488,8 @@ markitdown_gui/
 ├── console_panel.py     # Embedded console panel
 ├── i18n.py              # Internationalization module
 ├── logger_config.py     # Logging configuration
+├── pyproject.toml       # Project dependency config (uv/pip)
+├── uv.lock              # Dependency version lock file
 ├── MarkItDown.spec      # PyInstaller packaging config
 ├── setup.iss            # Inno Setup installer script
 └── README.md            # Project documentation

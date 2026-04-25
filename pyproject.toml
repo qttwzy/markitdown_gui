@@ -1,0 +1,17 @@
+[project]
+name = "markitdown-gui"
+version = "1.0.0"
+description = "一款强大的桌面文件转换工具，将多种文件格式转换为 Markdown"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "markitdown[pdf]>=0.1.5",
+    "tkinterdnd2>=0.4.3",
+    "pymupdf>=1.24.0",
+]
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.0",
+]

@@ -1,0 +1,28 @@
+services:
+  markitdown-gui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APT_MIRROR: mirrors.ustc.edu.cn
+        PIP_INDEX: https://pypi.tuna.tsinghua.edu.cn/simple
+        PIP_TRUSTED_HOST: pypi.tuna.tsinghua.edu.cn
+    image: markitdown-gui:latest
+    container_name: markitdown-gui
+    ports:
+      - "6080:6080"
+      - "5900:5900"
+    volumes:
+      - ./input:/app/input
+      - ./output:/app/output
+    environment:
+      - VNC_RESOLUTION=1280x800
+      - VNC_PASSWORD=
+    shm_size: "512m"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:6080/vnc.html"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
